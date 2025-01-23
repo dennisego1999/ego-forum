@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Inertia\Middleware;
@@ -41,8 +42,8 @@ class HandleInertiaRequests extends Middleware
 
     public function share(Request $request): array
     {
-        // Abort on excluded endpoints
-        if ($this->isExcluded($request)) {
+        // Abort logged-out or on excluded endpoints
+        if (Auth::guest() || $this->isExcluded($request)) {
             return parent::share($request);
         }
 

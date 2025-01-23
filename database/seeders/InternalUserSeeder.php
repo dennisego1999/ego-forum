@@ -28,22 +28,23 @@ class InternalUserSeeder extends Seeder
 
         // Seed admin users
         Role::query()->each(function (Role $role) use ($superAdminEmail, $adminPassword) {
-            $this->seedUser($role, 'Artcore', $superAdminEmail, $adminPassword);
+            $this->seedUser($role->label, 'Artcore', $role, $superAdminEmail, $adminPassword);
         });
 
         // Seed demo users when available
         if ($demoEmail = config('auth.demo_user.email')) {
             Role::query()->each(function (Role $role) use ($demoEmail, $demoPassword) {
-                $this->seedUser($role, 'Customer', $demoEmail, $demoPassword);
+                $this->seedUser($role->label, 'Customer', $role, $demoEmail, $demoPassword);
             });
         }
     }
 
-    private function seedUser(Role $role, string $lastName, string $baseEmail, ?string $basePassword = null): void
+    private function seedUser(string $firstName, string $lastName, Role $role, string $baseEmail, ?string $basePassword = null): void
     {
         // Data for the user
         $data = [
-            'name' => "$role->label $lastName",
+            'first_name' => $firstName,
+            'last_name' => $lastName,
             'password' => $basePassword ?: Str::password(),
         ];
 

@@ -29,5 +29,8 @@
         "npm": "please-use-yarn",
         "yarn": ">=1.22.17",
         "node": ">=18.19.1"
+    },
+    "dependencies": {
+        "sass": "^1.83.4"
     }
 }

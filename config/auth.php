@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'super_admin' => [
-        'email' => env('SUPER_ADMIN_EMAIL'),
-        'password' => env('SUPER_ADMIN_PASSWORD'),
+    'internal_user' => [
+        'email' => env('INTERNAL_USER_EMAIL'),
+        'password' => env('INTERNAL_USER_EMAIL'),
     ],
 
     'demo_user' => [

@@ -55,7 +55,7 @@ class FortifyServiceProvider extends ServiceProvider
                 // Check state
                 $isLoginAllowed = in_array(app()->environment(), config('login-link.allowed_environments'), true);
                 $isSharedWithExpose = str_contains($request->httpHost(), 'sharedwithexpose.com');
-                $superAdminEmail = config('auth.super_admin.email');
+                $superAdminEmail = config('auth.internal_user.email');
 
                 // Bail when no login links should be rendered
                 if (! $isLoginAllowed || $isSharedWithExpose || ! $superAdminEmail) {

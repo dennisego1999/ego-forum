@@ -7,36 +7,69 @@ use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
 {
-    /**
-     * The root template that's loaded on the first page visit.
-     *
-     * @see https://inertiajs.com/server-side-setup#root-template
-     *
-     * @var string
-     */
-    protected $rootView = 'app';
+    protected array $excludedControllers = [
+        // BroadcastController::class,
+    ];
 
-    /**
-     * Determines the current asset version.
-     *
-     * @see https://inertiajs.com/asset-versioning
-     */
-    public function version(Request $request): ?string
-    {
-        return parent::version($request);
-    }
+    protected array $excludedMiddleware = [
+        'telescope',
+    ];
 
-    /**
-     * Define the props that are shared by default.
-     *
-     * @see https://inertiajs.com/shared-data
-     *
-     * @return array<string, mixed>
-     */
+    protected array $excludedRoutes = [
+        'filament.*',
+        'livewire.*',
+        'filament-impersonate',
+        'sanctum.*',
+        'pulse',
+        'telescope',
+        'telescope.*',
+    ];
+
+    private array $hiddenZiggyRoutes = [
+        'debugbar.*',
+        'pretty-routes.*',
+        'ignition.*',
+        'telescope*',
+        'horizon.*',
+        'pulse',
+        'livewire.*',
+        'filament.*',
+        'filament-*',
+    ];
+
     public function share(Request $request): array
     {
-        return array_merge(parent::share($request), [
-            //
-        ]);
+        // Abort on excluded endpoints
+        if ($this->isExcluded($request)) {
+            return parent::share($request);
+        }
+
+        // Filter routes in Ziggy
+        config(['ziggy.except' => $this->hiddenZiggyRoutes]);
+
+        return [
+            ...parent::share($request),
+        ];
+    }
+
+    protected function isExcluded(Request $request): bool
+    {
+        // Exclude in specific routes
+        if ($request->routeIs($this->excludedRoutes)) {
+            return true;
+        }
+
+        // Bail without a controller
+        if (blank($request->route()->controller)) {
+            return false;
+        }
+
+        // Exclude in specific middlewares
+        if (in_array($this->excludedMiddleware, $request->route()?->middleware(), true)) {
+            return true;
+        }
+
+        // Check if we're on an excluded controller
+        return in_array($request->route()->controller::class, $this->excludedControllers, true);
     }
 }

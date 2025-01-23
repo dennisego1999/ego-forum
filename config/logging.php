@@ -51,6 +51,9 @@ return [
     */
 
     'channels' => [
+        'flare' => [
+            'driver' => 'flare',
+        ],
 
         'stack' => [
             'driver' => 'stack',

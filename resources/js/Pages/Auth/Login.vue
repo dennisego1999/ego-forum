@@ -6,11 +6,11 @@ import Checkbox from '@/Components/Checkbox.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
+import TextInput from '@/Components/TextInput.vue';import LoginLink from '@/Components/LoginLink.vue';
 
 defineProps({
     canResetPassword: Boolean,
-    status: String,
+    status: String, loginLinks: Object,
 });
 
 const form = useForm({
@@ -41,7 +41,14 @@ const submit = () => {
             {{ status }}
         </div>
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit"><div class="mb-4 empty:hidden">
+    <LoginLink :label="loginLinkLabel"
+               :email="loginLinkEmail"
+               v-for="(loginLinkLabel, loginLinkEmail) in loginLinks"
+               :key="loginLinkEmail"
+    />
+</div>
+
             <div>
                 <InputLabel for="email" value="Email" />
                 <TextInput

@@ -13,6 +13,16 @@ return [
     |
     */
 
+    'super_admin' => [
+        'email' => env('SUPER_ADMIN_EMAIL'),
+        'password' => env('SUPER_ADMIN_PASSWORD'),
+    ],
+
+    'demo_user' => [
+        'email' => env('DEMO_USER_EMAIL'),
+        'password' => env('DEMO_USER_PASSWORD'),
+    ],
+
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),

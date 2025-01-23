@@ -1,0 +1,46 @@
+<?php
+
+namespace {{ namespace }};
+
+use Illuminate\Auth\Access\Response;
+use App\Models\Permission;
+use {{ namespacedModel }};
+use {{ namespacedUserModel }};
+
+class {{ class }}
+{
+    public function viewAny({{ user }} $user): bool
+    {
+        return $user->hasPermissionTo(Permission::for('view_any', {{ model }}::class));
+    }
+
+    public function view({{ user }} $user, {{ model }} ${{ modelVariable }}): bool
+    {
+        return $user->hasPermissionTo(Permission::for('view', {{ model }}::class));
+    }
+
+    public function create({{ user }} $user): bool
+    {
+        return $user->hasPermissionTo(Permission::for('create', {{ model }}::class));
+    }
+
+    public function update({{ user }} $user, {{ model }} ${{ modelVariable }}): bool
+    {
+        return $user->hasPermissionTo(Permission::for('update', {{ model }}::class));
+    }
+
+    public function delete({{ user }} $user, {{ model }} ${{ modelVariable }}): bool
+    {
+        return $user->hasPermissionTo(Permission::for('delete', {{ model }}::class));
+    }
+
+    public function restore({{ user }} $user, {{ model }} ${{ modelVariable }}): bool
+    {
+        return $user->hasPermissionTo(Permission::for('restore', {{ model }}::class));
+    }
+
+    public function forceDelete({{ user }} $user, {{ model }} ${{ modelVariable }}): bool
+    {
+        return $user->hasPermissionTo(Permission::for('delete', {{ model }}::class));
+    }
+}

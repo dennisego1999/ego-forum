@@ -99,6 +99,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Global "Always To" Address
+    |--------------------------------------------------------------------------
+    |
+    | You may wish for all e-mails sent by your application to be sent to a testing email.
+    | This setting is ignored on production.
+    |
+    */
+
+    'always_to' => env('MAIL_ALWAYS_TO'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Global "From" Address
     |--------------------------------------------------------------------------
     |

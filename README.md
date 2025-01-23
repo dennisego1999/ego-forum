@@ -1,66 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Requirements
 
-## About Laravel
+- PHP 8.3
+- MySQL 8.x
+- Composer >= 2.0
+- Node 20.x (run `nvm use` in project root)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Hosting
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Hosting can be found on Forge under the <SERVER> server.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The server uses Ubuntu `24.x`, latest maintenance run `N/A`.
 
-## Learning Laravel
+- Production url: ...
+- Staging url: ...
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Setup
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+The recommended way of installing this project is through SSH and not with HTTPS!
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone git@github.com:dennisego1999/ego-forum.git
+```
 
-## Laravel Sponsors
+### Laravel
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Run: `composer install`
+    - When asked to log in with Satis credentials, you may abort by entering twice to fall back to use SSH.
+        - Make sure you've cloned the project with SSH and your local device has SSH access to your GitHub as well.
+        - You must have access to the Artcore Society organization on GitHub for cloning our custom packages.
+    - If cloning packages through SSH doesn't work please refer to the [Satis wiki guide](https://my.wearecelestial.group/wiki/satis-project-setup).
+- Create an environment file and fill in the details: `cp .env.example .env`
+    - You may find API keys and credentials for services inside Laravel Forge. (see deployment below)
+    - Note that all credentials should always be stored in the correct project.
+    - Archive or delete cards when data is redundant.
+- Create a virtual host to run the project:
+    - The recommended approach is using [Laravel Valet](https://laravel.com/docs/valet).
+    - When the site does not run on your default PHP version, please see Valet's [site isolation](https://laravel.com/docs/valet#php-versions).
+    - Prefix `php`, `artisan` and `composer` commands with `valet` to use the correct PHP version.
+    - Add your local url is added to `/etc/hosts` (macOS) for your localhost IP Address when the site should communicate with other local sites.
+- Generate an app key: `php artisan key:generate`.
+- Migrate databases: `php artisan migrate:fresh --seed`.
+    - Laravel will suggest to automatically create the DB when it doesn't exist yet.
+- Run `php artisan storage:link`.
+- Run `yarn install` followed by `npx vite build`.
 
-### Premium Partners
+### Telescope
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Locally, [Laravel Telescope](https://laravel.com/docs/telescope) can be used to debug several functions and states of the application. Telescope is available on `/telescope.`
 
-## Contributing
+You can enable Telescope with the `TELESCOPE_ENABLED` environment setting. By consulting the `config/telescope` file, you can find other settings to toggle several settings.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+In production mode, Telescope should only report errors.
 
-## Code of Conduct
+### Drivers
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Make sure you locally use the `sync` queue driver. This will instantly process jobs on the main threads for synchronization and sending e-mails.
 
-## Security Vulnerabilities
+When possible, you may use the `redis` queue, cache and session drivers on Laravel Forge hosting.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Tinkerwell
 
-## License
+When the project does not run on your default PHP version, you'll need to use the correct PHP Binary for Tinkerwell. For example, you can find the PHP binary in: `/usr/local/opt/php@8.x/bin` for Brew installed versions.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Migrations
+
+- During initial development, migrations are held in one file per database table.
+- Database entities must have seeders providing test data with Faker.
+- Locally, `php artisan migrate:fresh --seed` can be run.
+- After deployment database updates are made through individual migrations.
+- Migrations can be cleaned up in the future by using the [schema:drop](https://github.com/laravel/framework/pull/32275) Artisan command.
+
+## Development
+
+Git flow is used for local development:
+- Features start out as `feature/feature-name` from the `master` branch.
+- Bugs and small changes/improvements start out as `hotfix/name` from the `master` branch.
+- The production environment is maintained with the latest commit of `master`. The master branch must always work to be deployed at any moment!
+
+When using [Redis](https://laravel.com/docs/redis), please always use accessors for using keys while working with data. For example, see the `accessRequestsKey` accessor inside the `Project` model.
+
+The `MAIL_ALWAYS_TO` environment variable can be filled to use a [global "to" address](https://laravel.com/docs/mail#using-a-global-to-address) outside production for testing purposes.
+
+## Deployment
+
+For deployment Laravel Envoyer.io should be used with Laravel Forge. Please do not update the environment file in Laravel Forge when doing-so.
+
+Instead, use the environment file found in the Envoyer server setup! Credentials can be found by super admins in My Celestial.
+
+When using shared hosting, you should refer to [Laravel Envoy](https://laravel.com/docs/envoy).

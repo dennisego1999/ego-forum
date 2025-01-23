@@ -16,11 +16,11 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Seed users
-        $this->seedInternalUsers();
+        $this->seedInternalAndDemoUsers();
         $this->seedLocalEditorsWithPosts();
     }
 
-    private function seedInternalUsers(): void
+    private function seedInternalAndDemoUsers(): void
     {
         // Get credentials
         $internalUserEmail = config('auth.internal_user.email');

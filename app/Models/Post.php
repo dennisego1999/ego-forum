@@ -15,6 +15,15 @@ class Post extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+    protected $fillable = [
+        'user_id',
+        'title',
+        'body',
+    ];
+
+    protected $casts = [
+        'body' => 'json',
+    ];
 
     /*
     |--------------------------------------------------------------------------

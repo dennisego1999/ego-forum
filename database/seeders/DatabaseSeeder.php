@@ -11,8 +11,12 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->call(RoleSeeder::class);
-        $this->call(InternalUserSeeder::class);
+        // Call default seeders
+        $this->call([
+            RoleSeeder::class,
+            UserSeeder::class,
+            PostSeeder::class,
+        ]);
 
         // Remote setup
         if (! App::isLocal()) {

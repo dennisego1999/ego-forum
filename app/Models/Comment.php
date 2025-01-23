@@ -15,6 +15,16 @@ class Comment extends Model
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
+    protected $fillable = [
+        'user_id',
+        'commentable_id',
+        'commentable_type',
+        'body',
+    ];
+
+    protected $casts = [
+        'body' => 'json',
+    ];
 
     /*
     |--------------------------------------------------------------------------

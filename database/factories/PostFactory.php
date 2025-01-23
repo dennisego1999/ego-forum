@@ -14,8 +14,8 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'title' => fake()->title,
-            'body' => fake()->randomHtml,
+            'title' => str(fake()->sentence)->beforeLast('.'),
+            'body' => json_encode('<div>'.fake()->realText(250).'</div>'),
         ];
     }
 }

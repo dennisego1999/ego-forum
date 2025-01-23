@@ -6,6 +6,8 @@ return [
         'labels' => [
             'super_admin' => 'Super admin',
             'admin' => 'Admin',
+            'editor' => 'Editor',
+            'visitor' => 'Visitor',
         ],
     ],
     'users' => [

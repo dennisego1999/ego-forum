@@ -17,7 +17,7 @@ class CommentFactory extends Factory
             'user_id' => User::factory(),
             'commentable_id' => Post::factory(),
             'commentable_type' => Post::class,
-            'body' => fake()->randomHtml,
+            'body' => json_encode('<div>'.fake()->realText(250).'</div>'),
         ];
     }
 }
